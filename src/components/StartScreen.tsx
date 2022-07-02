@@ -3,9 +3,12 @@ import { useQuery } from "react-query";
 import { getUsersByHousehold } from "../lib/api/api";
 import { screenOptions } from "../lib/Constants";
 import { ChoosePerson } from "./ChoosePerson";
+import { Stats } from "./Stats";
+import { userLogin } from "../lib/api/api";
+import { WelcomeScreen } from "./WelcomeScreen";
 
 export function StartScreen() {
-  const [chooseScreen, setChooseScreen] = useState(screenOptions.CHOOSE_PERSON);
+  const [chooseScreen, setChooseScreen] = useState(screenOptions.WELCOME);
 
   const { data, isLoading, isError } = useQuery("household", () =>
     getUsersByHousehold(1)
@@ -13,8 +16,6 @@ export function StartScreen() {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
-
-  console.log(data);
 
   function selectButtonText() {
     if (chooseScreen === screenOptions.CHOOSE_PERSON) {
@@ -31,16 +32,23 @@ export function StartScreen() {
     }
   }
 
+  function handleScreens() {
+    switch (chooseScreen) {
+      case screenOptions.WELCOME:
+        return <WelcomeScreen changeScreen={setChooseScreen} />;
+      case screenOptions.CHOOSE_PERSON:
+        return <ChoosePerson changeScreen={setChooseScreen} />;
+      case screenOptions.STATS:
+        return <Stats changeScreen={setChooseScreen} />;
+
+      default:
+        break;
+    }
+  }
+
   return (
-    <div className="flex flex-col justify-center items-center border h-screen">
-      <button onClick={handleClick} className="btn btn-accent ml-[50%]">
-        {selectButtonText()}
-      </button>
-      {chooseScreen === screenOptions.CHOOSE_PERSON ? (
-        <ChoosePerson />
-      ) : (
-        <div>Stats</div>
-      )}
+    <div className="flex flex-col justify-center items-center border h-screen bg-white">
+      {handleScreens()}
     </div>
   );
 }
