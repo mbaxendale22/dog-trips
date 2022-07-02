@@ -16,10 +16,24 @@ export function Stats(props: Props) {
         <span className="text-white">Choose Person</span>
       </button>
 
-      <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
-        <p>Stat 1</p>
-        <p>Stat 2</p>
-        <p>Stat 3</p>
+      <div className="stats stats-vertical shadow">
+        <div className="stat">
+          <div className="stat-title">Most Trips this Week</div>
+          <div className="stat-value">Anna</div>
+          <div className="stat-desc">Num of trips</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title">Most Trips this Month</div>
+          <div className="stat-value">4,200</div>
+          <div className="stat-desc">↗︎ 400 (22%)</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title">Streak</div>
+          <div className="stat-value">1,200</div>
+          <div className="stat-desc">↘︎ 90 (14%)</div>
+        </div>
       </div>
     </>
   );

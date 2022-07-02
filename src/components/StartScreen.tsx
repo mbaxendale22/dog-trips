@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getUsersByHousehold } from "../lib/api/api";
-import { screenOptions } from "../lib/Constants";
+import { isAuthenticated, screenOptions } from "../lib/Constants";
 import { ChoosePerson } from "./ChoosePerson";
 import { Stats } from "./Stats";
 import { userLogin } from "../lib/api/api";
@@ -9,6 +9,10 @@ import { WelcomeScreen } from "./WelcomeScreen";
 
 export function StartScreen() {
   const [chooseScreen, setChooseScreen] = useState(screenOptions.WELCOME);
+
+  useEffect(() => {
+    isAuthenticated ? setChooseScreen(screenOptions.CHOOSE_PERSON) : null;
+  }, []);
 
   const { data, isLoading, isError } = useQuery("household", () =>
     getUsersByHousehold(1)

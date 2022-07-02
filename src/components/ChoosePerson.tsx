@@ -37,7 +37,7 @@ export function ChoosePerson(props: Props) {
           <span className="text-white">Who's turn is it?</span>
         </button>
         <p className="text-xl">This time its...</p>
-        <p className="text-xl">{selectedPerson.name}</p>
+        <p className="text-3xl">{selectedPerson.name?.toUpperCase()}</p>
       </div>
     </>
   );
