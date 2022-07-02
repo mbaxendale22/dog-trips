@@ -23,10 +23,6 @@ export function WelcomeScreen(props: Props) {
     userLogin(changeScreen, email, password);
   }
 
-  function userLogout() {
-    localStorage.removeItem("user");
-  }
-
   return (
     <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
       <p className="text-xl">Sign In</p>
@@ -53,9 +49,6 @@ export function WelcomeScreen(props: Props) {
         />
         <button onClick={handleUserLogin} className="btn btn-primary mt-8">
           <span className="text-white">sign in</span>
-        </button>
-        <button onClick={userLogout} className="btn btn-primary mt-8">
-          <span className="text-white">log out</span>
         </button>
       </div>
     </div>
