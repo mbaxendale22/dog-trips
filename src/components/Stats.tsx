@@ -1,5 +1,6 @@
 import { screenOptions } from "../lib/Constants";
 import { switchScreens } from "../lib/helpers";
+import { ScreenButton } from "./ScreenButton";
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -7,14 +8,13 @@ type Props = {
 
 export function Stats(props: Props) {
   const { changeScreen } = props;
-  function handleClick() {
-    switchScreens(changeScreen, screenOptions.CHOOSE_PERSON);
-  }
   return (
     <>
-      <button className="btn btn-primary ml-[20%] mb-8" onClick={handleClick}>
-        <span className="text-white">Choose Person</span>
-      </button>
+      <ScreenButton
+        title={"Choose Person"}
+        screen={screenOptions.CHOOSE_PERSON}
+        changeScreen={changeScreen}
+      />
 
       <div className="stats stats-vertical shadow">
         <div className="stat">

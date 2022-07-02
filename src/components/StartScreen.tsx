@@ -4,7 +4,6 @@ import { getUsersByHousehold } from "../lib/api/api";
 import { isAuthenticated, screenOptions } from "../lib/Constants";
 import { ChoosePerson } from "./ChoosePerson";
 import { Stats } from "./Stats";
-import { userLogin } from "../lib/api/api";
 import { WelcomeScreen } from "./WelcomeScreen";
 
 export function StartScreen() {
@@ -20,21 +19,6 @@ export function StartScreen() {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
-
-  function selectButtonText() {
-    if (chooseScreen === screenOptions.CHOOSE_PERSON) {
-      return "Show Stats";
-    }
-    return "Choose Person";
-  }
-
-  function handleClick() {
-    if (chooseScreen === screenOptions.CHOOSE_PERSON) {
-      setChooseScreen(screenOptions.STATS);
-    } else {
-      setChooseScreen(screenOptions.CHOOSE_PERSON);
-    }
-  }
 
   function handleScreens() {
     switch (chooseScreen) {

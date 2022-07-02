@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { User } from "../lib/types";
 import { screenOptions } from "../lib/Constants";
 import { selectPerson } from "../lib/api/api";
+import { ScreenButton } from "./ScreenButton";
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -19,15 +20,17 @@ export function ChoosePerson(props: Props) {
 
   if (!people) return <div>No one is available</div>;
 
-  function handleClick() {
-    switchScreens(changeScreen, screenOptions.STATS);
-  }
+  // function handleClick() {
+  //   switchScreens(changeScreen, screenOptions.STATS);
+  // }
 
   return (
     <>
-      <button className="btn btn-primary ml-[20%] mb-8" onClick={handleClick}>
-        <span className="text-white">Stats</span>
-      </button>
+      <ScreenButton
+        title={"Stats"}
+        screen={screenOptions.STATS}
+        changeScreen={changeScreen}
+      />
       <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
         <p className="text-xl">Who's taking the dog out?</p>
         <button
