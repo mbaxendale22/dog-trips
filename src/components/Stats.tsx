@@ -1,5 +1,5 @@
 import { screenOptions } from "../lib/Constants";
-import { switchScreens } from "../lib/helpers";
+import { switchScreens, userLogout } from "../lib/helpers";
 import { ScreenButton } from "./ScreenButton";
 
 type Props = {
@@ -8,6 +8,11 @@ type Props = {
 
 export function Stats(props: Props) {
   const { changeScreen } = props;
+
+  function handleLogout() {
+    userLogout(changeScreen);
+  }
+
   return (
     <>
       <ScreenButton
@@ -35,6 +40,9 @@ export function Stats(props: Props) {
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
+      <button onClick={handleLogout} className="btn btn-primary mt-8 mr-[20%]">
+        <span className="text-white">log out</span>
+      </button>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { switchScreens } from "../lib/helpers";
+import { switchScreens, userLogout } from "../lib/helpers";
 import { useQuery, useQueryClient } from "react-query";
 import { User } from "../lib/types";
 import { screenOptions } from "../lib/Constants";
@@ -14,15 +14,15 @@ export function ChoosePerson(props: Props) {
   const { changeScreen } = props;
   const [selectedPerson, setSelectedPerson] = useState<User>({} as User);
 
+  function handleLogout() {
+    userLogout(changeScreen);
+  }
+
   const queryClient = useQueryClient();
 
   const people = queryClient.getQueryData<User[]>("household");
 
   if (!people) return <div>No one is available</div>;
-
-  // function handleClick() {
-  //   switchScreens(changeScreen, screenOptions.STATS);
-  // }
 
   return (
     <>
@@ -42,6 +42,9 @@ export function ChoosePerson(props: Props) {
         <p className="text-xl">This time its...</p>
         <p className="text-3xl">{selectedPerson.name?.toUpperCase()}</p>
       </div>
+      <button onClick={handleLogout} className="btn btn-primary mt-8 mr-[20%]">
+        <span className="text-white">log out</span>
+      </button>
     </>
   );
 }
