@@ -22,7 +22,7 @@ export function ChoosePerson(props: Props) {
 
   const people = queryClient.getQueryData<User[]>("household");
 
-  if (!people) return <div>No one is available</div>;
+  if (!people) return <div>Hang on, loading...</div>;
 
   return (
     <>
