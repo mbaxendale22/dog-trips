@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { switchScreens, userLogout } from "../lib/helpers";
-import { useQuery, useQueryClient } from "react-query";
+import { userLogout } from "../lib/helpers";
+import { useQueryClient } from "react-query";
 import { User } from "../lib/types";
 import { screenOptions } from "../lib/Constants";
 import { selectPerson } from "../lib/api/api";

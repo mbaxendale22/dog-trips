@@ -1,7 +1,6 @@
-import { useQuery } from "react-query";
-import { screenOptions } from "../Constants";
+import { DATES, screenOptions } from "../Constants";
 import { generateRandomNum, isOdd } from "../helpers";
-import { User } from "../types";
+import { DatedTrip, User } from "../types";
 import { supabase } from "./init";
 
 export async function getUsersByHousehold(household: number) {
@@ -17,9 +16,10 @@ export async function getUsersByHousehold(household: number) {
 
 export async function postPerson(user: User) {
   const user_profile = user.id;
+  const household = user.household;
   const { data, error } = await supabase
     .from("trips")
-    .insert([{ user_profile: user_profile }]);
+    .insert([{ user_profile: user_profile, household: household }]);
 }
 
 export function selectPerson(
@@ -34,7 +34,7 @@ export function selectPerson(
     let dogWaker = isOdd(num) ? person1 : person2;
 
     postPerson(dogWaker);
-  }, 5000);
+  }, 2500);
 }
 
 export async function userLogin(
@@ -54,4 +54,17 @@ export async function userLogin(
   }
   localStorage.setItem("user", user.role as string);
   setter(screenOptions.CHOOSE_PERSON);
+}
+
+export async function getThisMonthsTrips(): Promise<DatedTrip[] | null> {
+  const { monthStart, today } = DATES;
+
+  let { data, error } = await supabase
+    .from<DatedTrip>("trips")
+    .select("*, user_profile!inner(*)")
+    .eq("household", 1)
+    .gte("created_at", monthStart.toISOString())
+    .lte("created_at", today.toISOString());
+
+  return data;
 }
