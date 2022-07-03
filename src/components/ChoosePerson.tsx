@@ -20,9 +20,7 @@ export function ChoosePerson(props: Props) {
 
   const queryClient = useQueryClient();
 
-  const people = queryClient.getQueryData<User[]>("household");
-
-  if (!people) return <div>Hang on, loading...</div>;
+  const people = queryClient.getQueryData<User[]>("household") as User[];
 
   return (
     <>
