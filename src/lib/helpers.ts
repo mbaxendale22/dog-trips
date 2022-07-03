@@ -61,3 +61,25 @@ export function weeklyData(data: DatedTrip[]) {
   });
   return weeklyDates;
 }
+
+export function streak(data: DatedTrip[]) {
+  const newData = [...data];
+  const reversedData = newData.reverse();
+  let streakCount = 0;
+  let person = reversedData[0].user_profile.name;
+
+  for (let i = 0; i < reversedData.length; i++) {
+    if (reversedData[i].user_profile.name === person) {
+      streakCount++;
+    } else {
+      break;
+    }
+  }
+
+  const results = {
+    streakCount,
+    person,
+  };
+
+  return results;
+}

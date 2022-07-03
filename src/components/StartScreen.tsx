@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getUsersByHousehold } from "../lib/api/api";
+import { getThisMonthsTrips, getUsersByHousehold } from "../lib/api/api";
 import { isAuthenticated, screenOptions } from "../lib/Constants";
+import { DatedTrip } from "../lib/types";
 import { ChoosePerson } from "./ChoosePerson";
 import { Stats } from "./Stats";
 import { WelcomeScreen } from "./WelcomeScreen";
@@ -17,6 +18,12 @@ export function StartScreen() {
     getUsersByHousehold(1)
   );
 
+  const {
+    data: tripData,
+    isError: tripError,
+    isLoading: tripLoading,
+  } = useQuery<DatedTrip[] | null>(["stats"], getThisMonthsTrips);
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
@@ -27,7 +34,14 @@ export function StartScreen() {
       case screenOptions.CHOOSE_PERSON:
         return <ChoosePerson changeScreen={setChooseScreen} />;
       case screenOptions.STATS:
-        return <Stats changeScreen={setChooseScreen} />;
+        return (
+          <Stats
+            changeScreen={setChooseScreen}
+            tripData={tripData}
+            tripError={tripError}
+            tripLoading={tripLoading}
+          />
+        );
 
       default:
         break;

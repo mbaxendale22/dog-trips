@@ -1,3 +1,4 @@
+import { useQueryClient } from "react-query";
 import { DATES, screenOptions } from "../Constants";
 import { generateRandomNum, isOdd } from "../helpers";
 import { DatedTrip, User } from "../types";
@@ -34,7 +35,7 @@ export function selectPerson(
     let dogWaker = isOdd(num) ? person1 : person2;
 
     postPerson(dogWaker);
-  }, 2500);
+  }, 2000);
 }
 
 export async function userLogin(
