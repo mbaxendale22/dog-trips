@@ -24,9 +24,9 @@ export function WelcomeScreen(props: Props) {
   }
 
   return (
-    <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
-      <p className="text-xl">Sign In</p>
-      <div className="form-control w-full max-w-xs">
+    <div className="card w-96 h-[60%] bg-secondary shadow-xl flex flex-col items-center">
+      <p className="text-xl mt-8">Sign In</p>
+      <div className="form-control w-full max-w-xs h-[75%] flex flex-col justify-evenly mt-8">
         <label className="label">
           <span className="label-text">What is your email?</span>
         </label>
