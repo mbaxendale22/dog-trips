@@ -8,12 +8,10 @@ import { ScreenButton } from "./ScreenButton";
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
-  setMonthlyStats: React.Dispatch<React.SetStateAction<any>>;
-  tripData: DatedTrip[] | null | undefined;
 };
 
 export function ChoosePerson(props: Props) {
-  const { changeScreen, setMonthlyStats, tripData } = props;
+  const { changeScreen } = props;
   const [selectedPerson, setSelectedPerson] = useState<User>({} as User);
 
   function handleLogout() {
@@ -30,8 +28,6 @@ export function ChoosePerson(props: Props) {
         title={"Stats"}
         screen={screenOptions.STATS}
         changeScreen={changeScreen}
-        tripData={tripData}
-        setter={setMonthlyStats}
       />
       <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
         <p className="text-xl">Who's taking the dog out?</p>
