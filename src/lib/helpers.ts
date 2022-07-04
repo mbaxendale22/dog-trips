@@ -76,6 +76,8 @@ export function streak(data: DatedTrip[]) {
     }
   }
 
+  console.log(streakCount);
+
   const results = {
     streakCount,
     person,

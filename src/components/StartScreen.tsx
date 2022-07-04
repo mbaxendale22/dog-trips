@@ -9,6 +9,7 @@ import { WelcomeScreen } from "./WelcomeScreen";
 
 export function StartScreen() {
   const [chooseScreen, setChooseScreen] = useState(screenOptions.WELCOME);
+  const [monthlyStats, setMonthlyStats] = useState({} as any);
 
   useEffect(() => {
     isAuthenticated ? setChooseScreen(screenOptions.CHOOSE_PERSON) : null;
@@ -24,23 +25,24 @@ export function StartScreen() {
     isLoading: tripLoading,
   } = useQuery<DatedTrip[] | null>(["stats"], getThisMonthsTrips);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading || tripLoading) return <div>Loading...</div>;
+  if (isError || tripLoading) return <div>Error</div>;
 
   function handleScreens() {
     switch (chooseScreen) {
       case screenOptions.WELCOME:
         return <WelcomeScreen changeScreen={setChooseScreen} />;
       case screenOptions.CHOOSE_PERSON:
-        return <ChoosePerson changeScreen={setChooseScreen} />;
+        return (
+          <ChoosePerson
+            changeScreen={setChooseScreen}
+            setMonthlyStats={setMonthlyStats}
+            tripData={tripData}
+          />
+        );
       case screenOptions.STATS:
         return (
-          <Stats
-            changeScreen={setChooseScreen}
-            tripData={tripData}
-            tripError={tripError}
-            tripLoading={tripLoading}
-          />
+          <Stats changeScreen={setChooseScreen} monthlyStats={monthlyStats} />
         );
 
       default:
