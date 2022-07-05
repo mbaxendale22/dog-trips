@@ -1,30 +1,50 @@
-import { useQuery } from "react-query";
 import { getThisMonthsTrips } from "../lib/api/api";
 import { calcFrequencies, streak, weeklyData } from "../lib/helpers";
-import { DatedTrip } from "../lib/types";
+import { AppThunk, DatedTrip } from "../lib/types";
+import {
+  endStatsRequest,
+  setMonthlyStats,
+  setStatsError,
+  setWeeklyStats,
+  startStatsRequest,
+} from "../redux/stats";
 
-export const handleStatFetching = async (
-  monthlySetter: React.Dispatch<React.SetStateAction<any>>,
-  weeklySetter: React.Dispatch<React.SetStateAction<any>>,
-  streakSetter: React.Dispatch<React.SetStateAction<any>>,
-  tripData: DatedTrip[] | null | undefined
-) => {
-  //* Make a call to the API to get the data
+export const handleStatsThunk = (): AppThunk => async (dispatch) => {
+  try {
+    dispatch(startStatsRequest());
+    const data = await getThisMonthsTrips();
 
-  //* crunch the numbers on the data to produce the stats
-  const { person: monthlyPerson, frequency: monthlyFrequency } =
-    calcFrequencies(tripData as DatedTrip[]);
+    const { person: monthlyPerson, frequency: monthlyFrequency } =
+      calcFrequencies(data as DatedTrip[]);
 
-  const formatDataToWeekly = weeklyData(tripData as DatedTrip[]);
+    const totalMonthlyStats = {
+      person: monthlyPerson,
+      total: monthlyFrequency,
+    };
 
-  const { person: weeklyPerson, frequency: weeklyFrequency } =
-    calcFrequencies(formatDataToWeekly);
+    dispatch(setMonthlyStats(totalMonthlyStats));
 
-  const { person, streakCount } = streak(tripData as DatedTrip[]);
+    const formatDataToWeekly = weeklyData(data as DatedTrip[]);
 
-  //* set stats in state
+    const { person: weeklyPerson, frequency: weeklyFrequency } =
+      calcFrequencies(formatDataToWeekly);
 
-  monthlySetter({ monthlyPerson, monthlyFrequency });
-  weeklySetter({ weeklyPerson, weeklyFrequency });
-  streakSetter({ person, streakCount });
+    const totalWeeklyStats = {
+      person: weeklyPerson,
+      total: weeklyFrequency,
+    };
+    dispatch(setWeeklyStats(totalWeeklyStats));
+
+    const { person, streakCount } = streak(data as DatedTrip[]);
+
+    const totalCurrentStreak = {
+      person,
+      total: streakCount,
+    };
+    dispatch(setWeeklyStats(totalCurrentStreak));
+    dispatch(endStatsRequest());
+  } catch (error) {
+    dispatch(setStatsError());
+    console.log(error);
+  }
 };
