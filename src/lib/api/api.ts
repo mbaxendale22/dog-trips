@@ -57,15 +57,8 @@ export async function userLogin(
   setter(screenOptions.CHOOSE_PERSON);
 }
 
-type Return = {
-  data: DatedTrip[] | null;
-  loading: boolean;
-};
-
-export async function getThisMonthsTrips(): Promise<Return> {
-  let loading = true;
+export async function getThisMonthsTrips() {
   const { monthStart, today } = DATES;
-  console.log("query Triggered");
 
   let { data, error } = await supabase
     .from<DatedTrip>("trips")
@@ -74,10 +67,5 @@ export async function getThisMonthsTrips(): Promise<Return> {
     .gte("created_at", monthStart.toISOString())
     .lte("created_at", today.toISOString());
 
-  loading = false;
-
-  return {
-    data,
-    loading,
-  };
+  return data;
 }

@@ -20,26 +20,6 @@ export function ScreenButton(props: Props) {
   const queryClient = useQueryClient();
 
   function handleClick() {
-    // queryClient.invalidateQueries("stats");
-
-    // const { person: monthlyPerson, frequency: monthlyFrequency } =
-    //   calcFrequencies(tripData as DatedTrip[]);
-
-    // monthlySetter({ monthlyPerson, monthlyFrequency });
-
-    // console.log(monthlyPerson, monthlyFrequency);
-
-    // const formatDataToWeekly = weeklyData(tripData as DatedTrip[]);
-
-    // const { person: weeklyPerson, frequency: weeklyFrequency } =
-    //   calcFrequencies(formatDataToWeekly);
-
-    // weeklySetter({ weeklyPerson, weeklyFrequency });
-
-    // const { person, streakCount } = streak(tripData as DatedTrip[]);
-
-    // streakSetter({ person, streakCount });
-
     switchScreens(changeScreen, screen);
   }
 

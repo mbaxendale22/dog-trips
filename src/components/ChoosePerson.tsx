@@ -22,6 +22,10 @@ export function ChoosePerson(props: Props) {
 
   const people = queryClient.getQueryData<User[]>("household") as User[];
 
+  function handleClick() {
+    selectPerson(people[0], people[1], setSelectedPerson);
+  }
+
   return (
     <>
       <ScreenButton
@@ -31,10 +35,7 @@ export function ChoosePerson(props: Props) {
       />
       <div className="card w-96 h-96 bg-secondary shadow-xl flex flex-col justify-evenly items-center">
         <p className="text-xl">Who's taking the dog out?</p>
-        <button
-          className="btn btn-primary"
-          onClick={() => selectPerson(people[0], people[1], setSelectedPerson)}
-        >
+        <button className="btn btn-primary" onClick={handleClick}>
           <span className="text-white">Who's turn is it?</span>
         </button>
         <p className="text-xl">This time its...</p>

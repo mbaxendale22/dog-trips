@@ -21,10 +21,16 @@ export function StartScreen() {
   const { data, isLoading, isError } = useQuery("household", () =>
     getUsersByHousehold(1)
   );
+  const { data: tripData } = useQuery("trips", getThisMonthsTrips);
 
   useEffect(() => {
-    handleStatFetching(setMonthlyStats, setWeeklyStats, setStreakStats);
-  }, [chooseScreen]);
+    handleStatFetching(
+      setMonthlyStats,
+      setWeeklyStats,
+      setStreakStats,
+      tripData
+    );
+  }, [tripData]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
