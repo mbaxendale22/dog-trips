@@ -21,11 +21,13 @@ export async function postPerson(user: Person | null | undefined) {
   if (!user) {
     return;
   }
+  console.log("user inside PP call", user);
   const user_profile = user.id;
   const household = user.household;
   const { data, error } = await supabase
     .from("trips")
     .insert([{ user_profile: user_profile, household: household }]);
+  console.log("data from the SP call in postPerson", data);
 }
 
 export function selectPerson(
@@ -35,7 +37,18 @@ export function selectPerson(
   let dogWalker = {} as Person | null | undefined;
   const num = generateRandomNum(0, 100);
   dogWalker = isOdd(num) ? person1 : person2;
-  return dogWalker;
+
+  if (!dogWalker) return;
+
+  const formattedDogWalker = {
+    id: dogWalker.id,
+    created_at: dogWalker.created_at,
+    user_profile: {
+      name: dogWalker.name,
+    },
+    household: dogWalker.household,
+  };
+  return formattedDogWalker;
 }
 
 export async function userLogin(

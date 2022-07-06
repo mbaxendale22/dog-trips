@@ -63,10 +63,10 @@ export const peopleSlice = createSlice({
       state.weeklyStats = action.payload;
     },
     setMonthlyStats: (state, action: PayloadAction<SingleStat>) => {
-      state.weeklyStats = action.payload;
+      state.monthlyStats = action.payload;
     },
-    setStreakCurrentStreak: (state, action: PayloadAction<SingleStat>) => {
-      state.weeklyStats = action.payload;
+    setCurrentStreak: (state, action: PayloadAction<SingleStat>) => {
+      state.currentStreak = action.payload;
     },
     startStatsRequest: (state) => {
       state.api.isLoading = true;
@@ -88,7 +88,7 @@ export const peopleSlice = createSlice({
 export const {
   setWeeklyStats,
   setMonthlyStats,
-  setStreakCurrentStreak,
+  setCurrentStreak,
   startStatsRequest,
   setStatsError,
   endStatsRequest,

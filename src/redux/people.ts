@@ -3,8 +3,10 @@ import { RootState } from "../lib/types";
 
 export type Person = {
   id: number;
-  createdAt: string;
-  name: string;
+  created_at: string;
+  user_profile: {
+    name: string;
+  };
   household: number;
 };
 

@@ -3,6 +3,7 @@ import { calcFrequencies, streak, weeklyData } from "../lib/helpers";
 import { AppThunk, DatedTrip } from "../lib/types";
 import {
   endStatsRequest,
+  setCurrentStreak,
   setMonthlyStats,
   setStatsError,
   setTrips,
@@ -14,6 +15,8 @@ export const trips_thunk = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startStatsRequest());
     const data = await getThisMonthsTrips();
+
+    console.log(data);
 
     dispatch(setTrips(data));
 
@@ -44,7 +47,7 @@ export const trips_thunk = (): AppThunk => async (dispatch) => {
       person,
       total: streakCount,
     };
-    dispatch(setWeeklyStats(totalCurrentStreak));
+    dispatch(setCurrentStreak(totalCurrentStreak));
     dispatch(endStatsRequest());
   } catch (error) {
     dispatch(setStatsError());

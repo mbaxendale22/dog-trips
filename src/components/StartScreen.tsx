@@ -29,14 +29,7 @@ export function StartScreen() {
       case screenOptions.CHOOSE_PERSON:
         return <ChoosePerson changeScreen={setChooseScreen} />;
       case screenOptions.STATS:
-        return (
-          <Stats
-            changeScreen={setChooseScreen}
-            monthlyStats={monthlyStats}
-            weeklyStats={weeklyStats}
-            streakStats={streakStats}
-          />
-        );
+        return <Stats changeScreen={setChooseScreen} />;
 
       default:
         break;

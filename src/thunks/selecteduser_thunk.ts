@@ -9,7 +9,12 @@ import {
   startUserRequest,
   usersSelector,
 } from "../redux/people";
-import { setMonthlyStats, setWeeklyStats, tripsSelector } from "../redux/stats";
+import {
+  setCurrentStreak,
+  setMonthlyStats,
+  setWeeklyStats,
+  tripsSelector,
+} from "../redux/stats";
 
 export const selecteduser_thunk =
   (): AppThunk => async (dispatch, getState) => {
@@ -28,15 +33,17 @@ export const selecteduser_thunk =
 
       const dogwalker = selectPerson(users[0], users[1]);
 
+      if (!dogwalker) return;
+
       dispatch(setSelectedUser(dogwalker));
 
       const trips = tripsSelector(state);
 
-      //TODO spread the new data into trips and update the state, running the calcs too and update the stats ui
+      if (!trips) return;
+
+      //TODO these calculations are not coming out correctly after the first time or at least not updating on the UI correctly
 
       const newTrips = [...trips, dogwalker];
-
-      console.log(newTrips);
 
       const { person: monthlyPerson, frequency: monthlyFrequency } =
         calcFrequencies(newTrips as DatedTrip[]);
@@ -57,6 +64,7 @@ export const selecteduser_thunk =
         person: weeklyPerson,
         total: weeklyFrequency,
       };
+
       dispatch(setWeeklyStats(totalWeeklyStats));
 
       const { person, streakCount } = streak(newTrips as DatedTrip[]);
@@ -65,11 +73,11 @@ export const selecteduser_thunk =
         person,
         total: streakCount,
       };
-      dispatch(setWeeklyStats(totalCurrentStreak));
+      dispatch(setCurrentStreak(totalCurrentStreak));
+
+      await postPerson(dogwalker);
 
       dispatch(endUserRequest);
-
-      const response = await postPerson(dogwalker);
     } catch (error) {
       setUserError();
     }

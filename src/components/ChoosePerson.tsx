@@ -5,8 +5,9 @@ import { DatedTrip, User } from "../lib/types";
 import { screenOptions } from "../lib/Constants";
 import { selectPerson } from "../lib/api/api";
 import { ScreenButton } from "./ScreenButton";
-import { useAppDispatch } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selecteduser_thunk } from "../thunks/selecteduser_thunk";
+import { selectedUserSelector } from "../redux/people";
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -14,17 +15,13 @@ type Props = {
 
 export function ChoosePerson(props: Props) {
   const { changeScreen } = props;
-  const [selectedPerson, setSelectedPerson] = useState<User>({} as User);
 
   const dispatch = useAppDispatch();
+  const selectedPerson = useAppSelector(selectedUserSelector);
 
   function handleLogout() {
     userLogout(changeScreen);
   }
-
-  const queryClient = useQueryClient();
-
-  const people = queryClient.getQueryData<User[]>("household") as User[];
 
   function handleClick() {
     dispatch(selecteduser_thunk());
@@ -43,7 +40,11 @@ export function ChoosePerson(props: Props) {
           <span className="text-white">Who's turn is it?</span>
         </button>
         <p className="text-xl">This time its...</p>
-        <p className="text-3xl">{selectedPerson.name?.toUpperCase()}</p>
+        {selectedPerson ? (
+          <p className="text-3xl">
+            {selectedPerson.user_profile.name?.toUpperCase()}
+          </p>
+        ) : null}
       </div>
       <button onClick={handleLogout} className="btn btn-primary mt-8 mr-[20%]">
         <span className="text-white">log out</span>
