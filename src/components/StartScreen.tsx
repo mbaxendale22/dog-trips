@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../hooks/redux";
 import { isAuthenticated, screenOptions } from "../lib/Constants";
+import { trips_thunk } from "../thunks/trips_thunk";
+import { users_thunk } from "../thunks/users_thunk";
 
 import { ChoosePerson } from "./ChoosePerson";
 import { Stats } from "./Stats";
@@ -12,8 +15,12 @@ export function StartScreen() {
     isAuthenticated ? setChooseScreen(screenOptions.CHOOSE_PERSON) : null;
   }, []);
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error</div>;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(users_thunk());
+    dispatch(trips_thunk());
+  }, []);
 
   function handleScreens() {
     switch (chooseScreen) {

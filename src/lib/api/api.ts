@@ -33,10 +33,8 @@ export function selectPerson(
   person2: Person | null | undefined
 ) {
   let dogWalker = {} as Person | null | undefined;
-  setTimeout(() => {
-    const num = generateRandomNum(0, 100);
-    dogWalker = isOdd(num) ? person1 : person2;
-  }, 2000);
+  const num = generateRandomNum(0, 100);
+  dogWalker = isOdd(num) ? person1 : person2;
   return dogWalker;
 }
 

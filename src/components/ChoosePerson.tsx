@@ -5,6 +5,8 @@ import { DatedTrip, User } from "../lib/types";
 import { screenOptions } from "../lib/Constants";
 import { selectPerson } from "../lib/api/api";
 import { ScreenButton } from "./ScreenButton";
+import { useAppDispatch } from "../hooks/redux";
+import { selecteduser_thunk } from "../thunks/selecteduser_thunk";
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -13,6 +15,8 @@ type Props = {
 export function ChoosePerson(props: Props) {
   const { changeScreen } = props;
   const [selectedPerson, setSelectedPerson] = useState<User>({} as User);
+
+  const dispatch = useAppDispatch();
 
   function handleLogout() {
     userLogout(changeScreen);
@@ -23,7 +27,7 @@ export function ChoosePerson(props: Props) {
   const people = queryClient.getQueryData<User[]>("household") as User[];
 
   function handleClick() {
-    selectPerson(people[0], people[1], setSelectedPerson);
+    dispatch(selecteduser_thunk());
   }
 
   return (
