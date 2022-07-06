@@ -1,39 +1,19 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { getThisMonthsTrips, getUsersByHousehold } from "../lib/api/api";
 import { isAuthenticated, screenOptions } from "../lib/Constants";
-import { DatedTrip } from "../lib/types";
-import { handleStatFetching } from "../thunks/trips";
+
 import { ChoosePerson } from "./ChoosePerson";
 import { Stats } from "./Stats";
 import { WelcomeScreen } from "./WelcomeScreen";
 
 export function StartScreen() {
   const [chooseScreen, setChooseScreen] = useState(screenOptions.WELCOME);
-  const [monthlyStats, setMonthlyStats] = useState({} as any);
-  const [weeklyStats, setWeeklyStats] = useState({} as any);
-  const [streakStats, setStreakStats] = useState({} as any);
 
   useEffect(() => {
     isAuthenticated ? setChooseScreen(screenOptions.CHOOSE_PERSON) : null;
   }, []);
 
-  const { data, isLoading, isError } = useQuery("household", () =>
-    getUsersByHousehold(1)
-  );
-  const { data: tripData } = useQuery("trips", getThisMonthsTrips);
-
-  useEffect(() => {
-    handleStatFetching(
-      setMonthlyStats,
-      setWeeklyStats,
-      setStreakStats,
-      tripData
-    );
-  }, [tripData]);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error</div>;
 
   function handleScreens() {
     switch (chooseScreen) {

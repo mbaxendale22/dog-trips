@@ -7,7 +7,7 @@ import {
   startUserRequest,
 } from "../redux/people";
 
-export const getUsers = (): AppThunk => async (dispatch) => {
+export const users_thunk = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startUserRequest);
 

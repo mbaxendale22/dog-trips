@@ -5,14 +5,17 @@ import {
   endStatsRequest,
   setMonthlyStats,
   setStatsError,
+  setTrips,
   setWeeklyStats,
   startStatsRequest,
 } from "../redux/stats";
 
-export const handleStatsThunk = (): AppThunk => async (dispatch) => {
+export const trips_thunk = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startStatsRequest());
     const data = await getThisMonthsTrips();
+
+    dispatch(setTrips(data));
 
     const { person: monthlyPerson, frequency: monthlyFrequency } =
       calcFrequencies(data as DatedTrip[]);

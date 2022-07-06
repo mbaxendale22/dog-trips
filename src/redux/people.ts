@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../lib/types";
 
-type Person = {
+export type Person = {
   id: number;
   createdAt: string;
   name: string;
@@ -14,6 +14,7 @@ type PeopleState = {
     error: boolean;
   };
   users: Person[] | null | undefined;
+  selectedUser: Person | null | undefined;
 };
 
 export const initialState: PeopleState = {
@@ -22,6 +23,7 @@ export const initialState: PeopleState = {
     error: false,
   },
   users: [],
+  selectedUser: null,
 };
 
 export const peopleSlice = createSlice({
@@ -45,11 +47,26 @@ export const peopleSlice = createSlice({
     setUser: (state, action: PayloadAction<Person[] | null | undefined>) => {
       state.users = action.payload;
     },
+    setSelectedUser: (
+      state,
+      action: PayloadAction<Person | null | undefined>
+    ) => {
+      state.selectedUser = action.payload;
+    },
+    clearSelectedUser: (state) => {
+      state.selectedUser = null;
+    },
   },
 });
 
-export const { startUserRequest, setUserError, endUserRequest, setUser } =
-  peopleSlice.actions;
+export const {
+  startUserRequest,
+  setUserError,
+  endUserRequest,
+  setUser,
+  setSelectedUser,
+  clearSelectedUser,
+} = peopleSlice.actions;
 
 export default peopleSlice.reducer;
 
@@ -57,4 +74,6 @@ export const peopleIsLoadingSelector = ({ people }: RootState) =>
   people.api.isLoading;
 export const peopleIsErrorSelector = ({ people }: RootState) =>
   people.api.error;
-export const peopleUserSelector = ({ people }: RootState) => people.api.users;
+export const usersSelector = ({ people }: RootState) => people.users;
+export const selectedUserSelector = ({ people }: RootState) =>
+  people.selectedUser;

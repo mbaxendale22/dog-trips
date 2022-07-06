@@ -1,4 +1,5 @@
 import { useQueryClient } from "react-query";
+import { Person } from "../../redux/people";
 import { DATES, screenOptions } from "../Constants";
 import { generateRandomNum, isOdd } from "../helpers";
 import { DatedTrip, User } from "../types";
@@ -15,7 +16,11 @@ export async function getUsersByHousehold(household: number) {
   return users;
 }
 
-export async function postPerson(user: User) {
+export async function postPerson(user: Person | null | undefined) {
+  // add error handling
+  if (!user) {
+    return;
+  }
   const user_profile = user.id;
   const household = user.household;
   const { data, error } = await supabase
@@ -24,18 +29,15 @@ export async function postPerson(user: User) {
 }
 
 export function selectPerson(
-  person1: User,
-  person2: User,
-  setSelectedPerson: React.Dispatch<React.SetStateAction<User>>
+  person1: Person | null | undefined,
+  person2: Person | null | undefined
 ) {
-  setSelectedPerson({} as User);
+  let dogWalker = {} as Person | null | undefined;
   setTimeout(() => {
     const num = generateRandomNum(0, 100);
-    isOdd(num) ? setSelectedPerson(person1) : setSelectedPerson(person2);
-    let dogWaker = isOdd(num) ? person1 : person2;
-
-    postPerson(dogWaker);
+    dogWalker = isOdd(num) ? person1 : person2;
   }, 2000);
+  return dogWalker;
 }
 
 export async function userLogin(

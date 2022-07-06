@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../lib/types";
+import { DatedTrip, RootState } from "../lib/types";
 
 /* 
 Types
@@ -11,6 +11,7 @@ type SingleStat = {
 };
 
 type Stats = {
+  trips: DatedTrip[] | null;
   weeklyStats: {
     person: string;
     total: number;
@@ -34,6 +35,7 @@ State & Reducers
 */
 
 export const initialState: Stats = {
+  trips: [],
   weeklyStats: {
     person: "",
     total: 0,
@@ -77,6 +79,9 @@ export const peopleSlice = createSlice({
       state.api.isLoading = false;
       state.api.error = false;
     },
+    setTrips: (state, action: PayloadAction<DatedTrip[] | null>) => {
+      state.trips = action.payload;
+    },
   },
 });
 
@@ -87,6 +92,7 @@ export const {
   startStatsRequest,
   setStatsError,
   endStatsRequest,
+  setTrips,
 } = peopleSlice.actions;
 
 export default peopleSlice.reducer;
@@ -107,3 +113,5 @@ export const statsLoadingSelector = ({ stats }: RootState) =>
   stats.api.isLoading;
 
 export const statsErrorSelector = ({ stats }: RootState) => stats.api.error;
+
+export const tripsSelector = ({ stats }: RootState) => stats.trips;
