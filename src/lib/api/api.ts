@@ -1,4 +1,3 @@
-import { useQueryClient } from "react-query";
 import { Person } from "../../redux/people";
 import { DATES, screenOptions } from "../Constants";
 import { generateRandomNum, isOdd } from "../helpers";
@@ -27,7 +26,6 @@ export async function postPerson(user: Person | null | undefined) {
   const { data, error } = await supabase
     .from("trips")
     .insert([{ user_profile: user_profile, household: household }]);
-  console.log("data from the SP call in postPerson", data);
 }
 
 export function selectPerson(
