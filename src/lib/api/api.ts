@@ -20,7 +20,7 @@ export async function postPerson(user: Person | null | undefined) {
   if (!user) {
     return;
   }
-  console.log('user inside PP call', user);
+
   const user_profile = user.id;
   const household = user.household;
   const { data, error } = await supabase

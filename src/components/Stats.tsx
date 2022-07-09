@@ -1,14 +1,14 @@
-import { useAppSelector } from "../hooks/redux";
+import { useAppSelector } from '../hooks/redux';
 
-import { DATES, screenOptions } from "../lib/Constants";
-import { switchScreens, userLogout } from "../lib/helpers";
-import { DatedTrip } from "../lib/types";
+import { DATES, screenOptions } from '../lib/Constants';
+import { switchScreens, userLogout } from '../lib/helpers';
+import { DatedTrip } from '../lib/types';
 import {
   currentStreakSelector,
   monthlyStatsSelector,
-  weeklyStatsSelector,
-} from "../redux/stats";
-import { ScreenButton } from "./ScreenButton";
+  weeklyStatsSelector
+} from '../redux/stats';
+import { ScreenButton } from './ScreenButton';
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -27,8 +27,6 @@ export function Stats(props: Props) {
   function handleClick() {
     switchScreens(changeScreen, screenOptions.CHOOSE_PERSON);
   }
-
-  console.log("ui MS", monthlyStats);
 
   return (
     <>
