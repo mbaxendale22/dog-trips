@@ -1,10 +1,9 @@
-import type { Action, ThunkAction } from "@reduxjs/toolkit";
-import type { store } from "../redux/store";
+import type { Action, ThunkAction } from '@reduxjs/toolkit';
+import type { store } from '../redux/store';
 
 export type User = {
   id: number;
-  createdAt: string;
-  user_id: string;
+  created_at: string;
   name: string;
   household: number;
 };

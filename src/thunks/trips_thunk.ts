@@ -1,6 +1,6 @@
-import { getThisMonthsTrips } from "../lib/api/api";
-import { calcFrequencies, streak, weeklyData } from "../lib/helpers";
-import { AppThunk, DatedTrip } from "../lib/types";
+import { getThisMonthsTrips } from '../lib/api/api';
+import { calcFrequencies, streak, weeklyData } from '../lib/helpers';
+import { AppThunk } from '../lib/types';
 import {
   endStatsRequest,
   setCurrentStreak,
@@ -8,49 +8,55 @@ import {
   setStatsError,
   setTrips,
   setWeeklyStats,
-  startStatsRequest,
-} from "../redux/stats";
+  startStatsRequest
+} from '../redux/stats';
 
 export const trips_thunk = (): AppThunk => async (dispatch) => {
   try {
     dispatch(startStatsRequest());
     const data = await getThisMonthsTrips();
 
-    console.log(data);
+    if (!data) {
+      dispatch(setStatsError('no trip data available'));
+      return;
+    }
 
     dispatch(setTrips(data));
 
+    // if the user has no trips because it's their first time using the app, return
+    if (data.length === 0) return;
+
     const { person: monthlyPerson, frequency: monthlyFrequency } =
-      calcFrequencies(data as DatedTrip[]);
+      calcFrequencies(data);
 
     const totalMonthlyStats = {
       person: monthlyPerson,
-      total: monthlyFrequency,
+      total: monthlyFrequency
     };
 
     dispatch(setMonthlyStats(totalMonthlyStats));
 
-    const formatDataToWeekly = weeklyData(data as DatedTrip[]);
+    const formatDataToWeekly = weeklyData(data);
 
     const { person: weeklyPerson, frequency: weeklyFrequency } =
       calcFrequencies(formatDataToWeekly);
 
     const totalWeeklyStats = {
       person: weeklyPerson,
-      total: weeklyFrequency,
+      total: weeklyFrequency
     };
     dispatch(setWeeklyStats(totalWeeklyStats));
 
-    const { person, streakCount } = streak(data as DatedTrip[]);
+    const { person, streakCount } = streak(data);
 
     const totalCurrentStreak = {
       person,
-      total: streakCount,
+      total: streakCount
     };
     dispatch(setCurrentStreak(totalCurrentStreak));
     dispatch(endStatsRequest());
   } catch (error) {
-    dispatch(setStatsError());
+    dispatch(setStatsError('unable to fetch trip data'));
     console.log(error);
   }
 };

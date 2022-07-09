@@ -1,16 +1,16 @@
-import { Person } from "../../redux/people";
-import { DATES, screenOptions } from "../Constants";
-import { generateRandomNum, isOdd } from "../helpers";
-import { DatedTrip, User } from "../types";
-import { supabase } from "./init";
+import { Person } from '../../redux/people';
+import { DATES, screenOptions } from '../Constants';
+import { generateRandomNum, isOdd } from '../helpers';
+import { DatedTrip, User } from '../types';
+import { supabase } from './init';
 
 export async function getUsersByHousehold(household: number) {
-  const user = localStorage.getItem("user");
-  if (user !== "authenticated") return;
+  const user = localStorage.getItem('user');
+  if (user !== 'authenticated') return;
   let { data: users, error } = await supabase
-    .from("user_profile")
-    .select("*")
-    .eq("household", household);
+    .from('user_profile')
+    .select('*')
+    .eq('household', household);
 
   return users;
 }
@@ -20,11 +20,11 @@ export async function postPerson(user: Person | null | undefined) {
   if (!user) {
     return;
   }
-  console.log("user inside PP call", user);
+  console.log('user inside PP call', user);
   const user_profile = user.id;
   const household = user.household;
   const { data, error } = await supabase
-    .from("trips")
+    .from('trips')
     .insert([{ user_profile: user_profile, household: household }]);
 }
 
@@ -38,13 +38,15 @@ export function selectPerson(
 
   if (!dogWalker) return;
 
+  console.log(dogWalker);
+
   const formattedDogWalker = {
     id: dogWalker.id,
     created_at: dogWalker.created_at,
     user_profile: {
-      name: dogWalker.name,
+      name: dogWalker.name
     },
-    household: dogWalker.household,
+    household: dogWalker.household
   };
   return formattedDogWalker;
 }
@@ -56,15 +58,15 @@ export async function userLogin(
 ) {
   let { user, error } = await supabase.auth.signIn({
     email,
-    password,
+    password
   });
   if (error) {
-    return "no user found";
+    return 'no user found';
   }
   if (!user) {
     return;
   }
-  localStorage.setItem("user", user.role as string);
+  localStorage.setItem('user', user.role as string);
   setter(screenOptions.CHOOSE_PERSON);
 }
 
@@ -72,11 +74,11 @@ export async function getThisMonthsTrips() {
   const { monthStart, today } = DATES;
 
   let { data, error } = await supabase
-    .from<DatedTrip>("trips")
-    .select("*, user_profile!inner(*)")
-    .eq("household", 1)
-    .gte("created_at", monthStart.toISOString())
-    .lte("created_at", today.toISOString());
+    .from<DatedTrip>('trips')
+    .select('*, user_profile!inner(*)')
+    .eq('household', 1)
+    .gte('created_at', monthStart.toISOString())
+    .lte('created_at', today.toISOString());
 
   return data;
 }

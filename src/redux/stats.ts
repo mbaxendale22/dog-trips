@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DatedTrip, RootState } from "../lib/types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { DatedTrip, RootState } from '../lib/types';
 
 /* 
 Types
@@ -26,7 +26,10 @@ type Stats = {
   };
   api: {
     isLoading: boolean;
-    error: boolean;
+    error: {
+      isError: boolean;
+      message: string;
+    };
   };
 };
 
@@ -37,25 +40,28 @@ State & Reducers
 export const initialState: Stats = {
   trips: [],
   weeklyStats: {
-    person: "",
-    total: 0,
+    person: '',
+    total: 0
   },
   monthlyStats: {
-    person: "",
-    total: 0,
+    person: '',
+    total: 0
   },
   currentStreak: {
-    person: "",
-    total: 0,
+    person: '',
+    total: 0
   },
   api: {
     isLoading: false,
-    error: false,
-  },
+    error: {
+      isError: false,
+      message: ''
+    }
+  }
 };
 
 export const peopleSlice = createSlice({
-  name: "stats",
+  name: 'stats',
   initialState,
   reducers: {
     //insert redcers here
@@ -70,19 +76,20 @@ export const peopleSlice = createSlice({
     },
     startStatsRequest: (state) => {
       state.api.isLoading = true;
-      state.api.error = false;
+      state.api.error.isError = false;
     },
-    setStatsError: (state) => {
-      state.api.error = true;
+    setStatsError: (state, action: PayloadAction<string>) => {
+      state.api.error.isError = true;
+      state.api.error.message = action.payload;
     },
     endStatsRequest: (state) => {
       state.api.isLoading = false;
-      state.api.error = false;
+      state.api.error.isError = false;
     },
     setTrips: (state, action: PayloadAction<DatedTrip[] | null>) => {
       state.trips = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -92,7 +99,7 @@ export const {
   startStatsRequest,
   setStatsError,
   endStatsRequest,
-  setTrips,
+  setTrips
 } = peopleSlice.actions;
 
 export default peopleSlice.reducer;

@@ -1,11 +1,11 @@
-import { getUsersByHousehold } from "../lib/api/api";
-import { AppThunk } from "../lib/types";
+import { getUsersByHousehold } from '../lib/api/api';
+import { AppThunk } from '../lib/types';
 import {
   endUserRequest,
   setUser,
   setUserError,
-  startUserRequest,
-} from "../redux/people";
+  startUserRequest
+} from '../redux/people';
 
 export const users_thunk = (): AppThunk => async (dispatch) => {
   try {

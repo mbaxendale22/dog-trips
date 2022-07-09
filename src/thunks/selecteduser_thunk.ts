@@ -1,20 +1,26 @@
-import { postPerson, selectPerson } from "../lib/api/api";
-import { calcFrequencies, streak, weeklyData } from "../lib/helpers";
-import { AppThunk, DatedTrip } from "../lib/types";
+import { postPerson, selectPerson } from '../lib/api/api';
+import {
+  calcFrequencies,
+  generateRandomNum,
+  streak,
+  weeklyData
+} from '../lib/helpers';
+import { AppThunk, DatedTrip } from '../lib/types';
 import {
   clearSelectedUser,
   endUserRequest,
   setSelectedUser,
   setUserError,
   startUserRequest,
-  usersSelector,
-} from "../redux/people";
+  usersSelector
+} from '../redux/people';
 import {
   setCurrentStreak,
   setMonthlyStats,
+  setTrips,
   setWeeklyStats,
-  tripsSelector,
-} from "../redux/stats";
+  tripsSelector
+} from '../redux/stats';
 
 export const selecteduser_thunk =
   (): AppThunk => async (dispatch, getState) => {
@@ -41,16 +47,33 @@ export const selecteduser_thunk =
 
       if (!trips) return;
 
-      //TODO these calculations are not coming out correctly after the first time or at least not updating on the UI correctly
+      const TEMP_TRIP_ID = generateRandomNum(1, 500);
+      const TEMP_TRIP_CA = new Date().toISOString();
 
-      const newTrips = [...trips, dogwalker];
+      const newFormattedTrip = {
+        id: TEMP_TRIP_ID,
+        created_at: TEMP_TRIP_CA,
+        user_profile: {
+          id: dogwalker.id,
+          created_at: dogwalker.created_at,
+          name: dogwalker.user_profile.name,
+          household: dogwalker.household
+        },
+        household: dogwalker.household
+      };
+
+      const newTrips = [...trips, newFormattedTrip];
+
+      if (!newTrips) return;
+
+      dispatch(setTrips(newTrips));
 
       const { person: monthlyPerson, frequency: monthlyFrequency } =
         calcFrequencies(newTrips as DatedTrip[]);
 
       const totalMonthlyStats = {
         person: monthlyPerson,
-        total: monthlyFrequency,
+        total: monthlyFrequency
       };
 
       dispatch(setMonthlyStats(totalMonthlyStats));
@@ -62,7 +85,7 @@ export const selecteduser_thunk =
 
       const totalWeeklyStats = {
         person: weeklyPerson,
-        total: weeklyFrequency,
+        total: weeklyFrequency
       };
 
       dispatch(setWeeklyStats(totalWeeklyStats));
@@ -71,7 +94,7 @@ export const selecteduser_thunk =
 
       const totalCurrentStreak = {
         person,
-        total: streakCount,
+        total: streakCount
       };
       dispatch(setCurrentStreak(totalCurrentStreak));
 

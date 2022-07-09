@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../lib/types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../lib/types';
 
 export type Person = {
   id: number;
@@ -22,14 +22,14 @@ type PeopleState = {
 export const initialState: PeopleState = {
   api: {
     isLoading: false,
-    error: false,
+    error: false
   },
   users: [],
-  selectedUser: null,
+  selectedUser: null
 };
 
 export const peopleSlice = createSlice({
-  name: "people",
+  name: 'people',
   initialState,
   reducers: {
     startUserRequest: (state) => {
@@ -57,8 +57,8 @@ export const peopleSlice = createSlice({
     },
     clearSelectedUser: (state) => {
       state.selectedUser = null;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -67,7 +67,7 @@ export const {
   endUserRequest,
   setUser,
   setSelectedUser,
-  clearSelectedUser,
+  clearSelectedUser
 } = peopleSlice.actions;
 
 export default peopleSlice.reducer;

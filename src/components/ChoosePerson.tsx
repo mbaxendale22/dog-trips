@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { userLogout } from "../lib/helpers";
-import { useQueryClient } from "react-query";
-import { DatedTrip, User } from "../lib/types";
-import { screenOptions } from "../lib/Constants";
-import { selectPerson } from "../lib/api/api";
-import { ScreenButton } from "./ScreenButton";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { selecteduser_thunk } from "../thunks/selecteduser_thunk";
-import { selectedUserSelector } from "../redux/people";
+import { useState } from 'react';
+import { userLogout } from '../lib/helpers';
+import { useQueryClient } from 'react-query';
+import { screenOptions } from '../lib/Constants';
+import { selectPerson } from '../lib/api/api';
+import { ScreenButton } from './ScreenButton';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { selecteduser_thunk } from '../thunks/selecteduser_thunk';
+import { selectedUserSelector } from '../redux/people';
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -30,7 +29,7 @@ export function ChoosePerson(props: Props) {
   return (
     <>
       <ScreenButton
-        title={"Stats"}
+        title={'Stats'}
         screen={screenOptions.STATS}
         changeScreen={changeScreen}
       />

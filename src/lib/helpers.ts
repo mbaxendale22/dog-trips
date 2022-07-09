@@ -1,7 +1,7 @@
-import { subDays } from "date-fns";
-import React from "react";
-import { DATES, screenOptions } from "./Constants";
-import { DatedTrip } from "./types";
+import { subDays } from 'date-fns';
+import React from 'react';
+import { DATES, screenOptions } from './Constants';
+import { DatedTrip } from './types';
 
 export function generateRandomNum(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -21,13 +21,13 @@ export function switchScreens(
 export function userLogout(
   setter: React.Dispatch<React.SetStateAction<string>>
 ) {
-  localStorage.removeItem("user");
+  localStorage.removeItem('user');
   switchScreens(setter, screenOptions.WELCOME);
 }
 
 export function calcFrequencies(data: DatedTrip[]) {
   let user1 = data[0].user_profile.name;
-  let user2 = "";
+  let user2 = '';
   let user1Count = 0;
   let user2Count = 0;
 
@@ -43,12 +43,12 @@ export function calcFrequencies(data: DatedTrip[]) {
   if (user1Count > user2Count) {
     return {
       person: user1,
-      frequency: user1Count,
+      frequency: user1Count
     };
   } else {
     return {
       person: user2,
-      frequency: user2Count,
+      frequency: user2Count
     };
   }
 }
@@ -64,6 +64,7 @@ export function weeklyData(data: DatedTrip[]) {
 
 export function streak(data: DatedTrip[]) {
   const newData = [...data];
+
   const reversedData = newData.reverse();
   let streakCount = 0;
   let person = reversedData[0].user_profile.name;
@@ -78,7 +79,7 @@ export function streak(data: DatedTrip[]) {
 
   const results = {
     streakCount,
-    person,
+    person
   };
 
   return results;
