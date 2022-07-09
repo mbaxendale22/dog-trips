@@ -56,7 +56,7 @@ export const selecteduser_thunk =
         user_profile: {
           id: dogwalker.id,
           created_at: dogwalker.created_at,
-          name: dogwalker.user_profile.name,
+          name: dogwalker.name,
           household: dogwalker.household
         },
         household: dogwalker.household

@@ -4,9 +4,7 @@ import { RootState } from '../lib/types';
 export type Person = {
   id: number;
   created_at: string;
-  user_profile: {
-    name: string;
-  };
+  name: string;
   household: number;
 };
 

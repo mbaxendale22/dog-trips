@@ -1,7 +1,7 @@
 import { Person } from '../../redux/people';
 import { DATES, screenOptions } from '../Constants';
 import { generateRandomNum, isOdd } from '../helpers';
-import { DatedTrip, User } from '../types';
+import { DatedTrip } from '../types';
 import { supabase } from './init';
 
 export async function getUsersByHousehold(household: number) {
@@ -38,7 +38,7 @@ export function selectPerson(
 
   if (!dogWalker) return;
 
-  console.log(dogWalker);
+  console.log('dogWALKER', dogWalker);
 
   const formattedDogWalker = {
     id: dogWalker.id,
@@ -48,7 +48,7 @@ export function selectPerson(
     },
     household: dogWalker.household
   };
-  return formattedDogWalker;
+  return dogWalker;
 }
 
 export async function userLogin(

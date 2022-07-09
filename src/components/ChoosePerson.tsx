@@ -40,9 +40,7 @@ export function ChoosePerson(props: Props) {
         </button>
         <p className="text-xl">This time its...</p>
         {selectedPerson ? (
-          <p className="text-3xl">
-            {selectedPerson.user_profile.name?.toUpperCase()}
-          </p>
+          <p className="text-3xl">{selectedPerson.name?.toUpperCase()}</p>
         ) : null}
       </div>
       <button onClick={handleLogout} className="btn btn-primary mt-8 mr-[20%]">
