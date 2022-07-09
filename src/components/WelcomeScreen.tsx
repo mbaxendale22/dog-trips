@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { userLogin } from "../lib/api/api";
-import { isAuthenticated } from "../lib/Constants";
+import React, { useState } from 'react';
+import { userLogin } from '../lib/api/api';
 
 type Props = {
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -9,8 +8,8 @@ type Props = {
 export function WelcomeScreen(props: Props) {
   const { changeScreen } = props;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

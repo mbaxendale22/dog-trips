@@ -2,7 +2,6 @@ import { useAppSelector } from '../hooks/redux';
 
 import { DATES, screenOptions } from '../lib/Constants';
 import { switchScreens, userLogout } from '../lib/helpers';
-import { DatedTrip } from '../lib/types';
 import {
   currentStreakSelector,
   monthlyStatsSelector,
@@ -30,9 +29,11 @@ export function Stats(props: Props) {
 
   return (
     <>
-      <button className="btn btn-primary ml-[20%] mb-8" onClick={handleClick}>
-        <span className="text-white">Choose Person</span>
-      </button>
+      <ScreenButton
+        title={'Person'}
+        screen={screenOptions.CHOOSE_PERSON}
+        changeScreen={changeScreen}
+      />
 
       <div className="stats stats-vertical shadow">
         <div className="stat">

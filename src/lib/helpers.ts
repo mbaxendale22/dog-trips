@@ -1,4 +1,3 @@
-import { subDays } from 'date-fns';
 import React from 'react';
 import { DATES, screenOptions } from './Constants';
 import { DatedTrip } from './types';

@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { userLogout } from '../lib/helpers';
-import { useQueryClient } from 'react-query';
 import { screenOptions } from '../lib/Constants';
-import { selectPerson } from '../lib/api/api';
 import { ScreenButton } from './ScreenButton';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { selecteduser_thunk } from '../thunks/selecteduser_thunk';

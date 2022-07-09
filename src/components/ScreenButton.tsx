@@ -1,12 +1,4 @@
-import { useQuery, useQueryClient } from "react-query";
-import { getThisMonthsTrips } from "../lib/api/api";
-import {
-  calcFrequencies,
-  streak,
-  switchScreens,
-  weeklyData,
-} from "../lib/helpers";
-import { DatedTrip } from "../lib/types";
+import { switchScreens } from '../lib/helpers';
 
 type Props = {
   title: string;
@@ -16,8 +8,6 @@ type Props = {
 
 export function ScreenButton(props: Props) {
   const { title, screen, changeScreen } = props;
-
-  const queryClient = useQueryClient();
 
   function handleClick() {
     switchScreens(changeScreen, screen);
